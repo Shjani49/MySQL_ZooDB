@@ -14,7 +14,9 @@ CREATE TABLE IF NOT EXISTS Species (
     Habitat varchar(50) NULL,
     -- RedListStatus must be one of the two character codes available here:
     -- https://www.iucn.org/sites/dev/files/styles/graphics/public/en.png?itok=ah02aJ5e
-    RedListStatus char(2) NOT NULL
+    RedListStatus char(2) NOT NULL,
+    CONSTRAINT CK_Species_Diet CHECK (Diet IN ('C', 'H', 'O')),
+    CONSTRAINT CK_Species_RedListStatus CHECK (RedListStatus IN ('NE', 'DD', 'LC', 'NT', 'VU', 'EN', 'CR', 'EW', 'EX'))
 );
 CREATE TABLE IF NOT EXISTS Animals (
 	-- ColumnName DataType Attributes
@@ -28,12 +30,19 @@ CREATE TABLE IF NOT EXISTS Animals (
     DateOfBirth date NULL,
     DateOfDeparture date NULL,
     DepartureCirumstances varchar(30) NULL,
-    CONSTRAINT FK_Animals_Species FOREIGN KEY (SpeciesID) REFERENCES Species(ID)
+    CONSTRAINT FK_Animals_Species FOREIGN KEY (SpeciesID) REFERENCES Species(ID),
+    CONSTRAINT CK_Animals_Gender CHECK (Gender IN ('M', 'F'))
 );
 
+
+
+
 -- Insert a Record.
-INSERT INTO Animals (Name, Species, Gender, Origin)
-VALUES ('George', 'Elephant', 'M', 'India, Rescue');
+INSERT INTO Species (CommonName, ScientificName, Class, TaxonomyID, Diet, RedListStatus)
+VALUE ('Indian Elephant', 'Elephas Maximus Indicus', 'Mammal', 99487, 'H', 'EN');
+
+INSERT INTO Animals (Name, SpeciesID, Gender, Origin)
+VALUES ('George', 1, 'M', 'India, Rescue');
 
 -- Update a Record.
 UPDATE Animals
@@ -49,6 +58,8 @@ WHERE Name = 'George';
 -- Select something about a Record.
 SELECT Species FROM Animals
 WHERE Name = 'George';
+
+
 
 
 -- Cage details
