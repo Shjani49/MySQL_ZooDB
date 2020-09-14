@@ -1,0 +1,11 @@
+﻿The entity on the other end of the line has exactly one relationship to this entity.
+----|-
+
+The entity on the other end of the line has zero or one relationships to this entity.
+---0|-
+
+The entity on the other end of the line has one or more relationships to this entity.
+----|<
+
+The entity on the other end of the line has zero or more relationships to this entity.
+----0<
